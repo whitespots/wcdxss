@@ -22,12 +22,12 @@ def check():
         return resp(False)
     try:
         if not find_xss:
-            return resp(True) if requests.get(url, headers={
+            return resp(True) if requests.get(url, timeout=4, headers={
               'X-Forwarded-Host': payload,
               'X-Forwarded-For': payload,
             }).text.find(payload) > -1 else resp(False)
         if find_xss:
-            return resp(True) if requests.get(url, headers={
+            return resp(True) if requests.get(url, timeout=4, headers={
               'X-Forwarded-Host': xss_payload,
               'X-Forwarded-For': xss_payload,
             }).text.find(
